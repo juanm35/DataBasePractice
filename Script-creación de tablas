@@ -1,0 +1,42 @@
+/* crear tabla de Usuarios */
+CREATE TABLE `Usuarios` (
+   `id` INT NOT NULL AUTO_INCREMENT,
+   `nombre` VARCHAR(255) NOT NULL,
+   `email` VARCHAR(255) NOT NULL,
+   PRIMARY KEY (`id`)
+);
+
+/* Crear tabla de notasdetexto*/-
+CREATE TABLE `notasDeTexto` (
+   `id_usuario` INT NOT NULL,
+   `id_nota` INT NOT NULL AUTO_INCREMENT,
+   `titulo` VARCHAR(100) NOT NULL,
+   `fecha_creacion` DATE NOT NULL,
+   `fecha_modificacion` DATE NOT NULL,
+   `descripcion` VARCHAR(255) NOT NULL,
+   `se_puede_eliminar_0_1` INT NOT NULL,
+   PRIMARY KEY (`id_nota`)
+);
+
+/* crear tabla de categoria */
+CREATE TABLE `categoria` (
+   `id` INT NOT NULL AUTO_INCREMENT,
+   `nombre` VARCHAR(255) NOT NULL,
+   PRIMARY KEY (`id`)
+);
+
+/* crear tabla intermedia para la relacion muchos a muchos notasdetexto_categoria */
+CREATE TABLE `notasDeTexto_categoria` (
+   `id` INT NOT NULL,
+   `id_nota` INT NOT NULL,
+   `id_categoria` INT NOT NULL,
+   PRIMARY KEY (`id`)
+);
+
+
+/* crear relacion de clave foranea para el id de usuario */
+ALTER TABLE `notasDeTexto` ADD CONSTRAINT `FK_d8612058-8660-4954-9274-c16b90e3e9df` FOREIGN KEY (`id_usuario`) REFERENCES `Usuarios`(`id`)  ;
+/* crear relacion de clave foranea para el id de nota */
+ALTER TABLE `notasDeTexto_categoria` ADD CONSTRAINT `FK_c6b6d212-62f2-4a9a-a582-e0a98d71e11f` FOREIGN KEY (`id_nota`) REFERENCES `notasDeTexto`(`id_nota`)  ;
+/* crear relacion de clave foranea para el id de categoria */
+ALTER TABLE `notasDeTexto_categoria` ADD CONSTRAINT `FK_a87029a8-c646-40f7-861d-e936c7aa5829` FOREIGN KEY (`id_categoria`) REFERENCES `categoria`(`id`)  ;
